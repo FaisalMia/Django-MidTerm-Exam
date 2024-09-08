@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <section class="container mt-5 pt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Welcome to Car Page</h1>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos, quae nesciunt dolore ea natus at possimus eius, veritatis earum laborum voluptate nam adipisci distinctio alias ut perspiciatis illo officia facilis qui veniam necessitatibus? Saepe alias non laboriosam totam voluptates quidem aperiam quisquam deleniti laborum id dolore reiciendis, atque amet odio officiis ab, incidunt provident! Suscipit dolorum corporis rem repudiandae eveniet maxime alias commodi tempore facere consequuntur veritatis, quae facilis. Ratione voluptatem, consequatur et pariatur, dignissimos qui architecto, ducimus facere saepe minus sapiente ullam mollitia esse ex consectetur inventore asperiores facilis doloribus laudantium quaerat eveniet odio aliquam maiores at. Necessitatibus, quaerat.</p>
+            </div>
+            <div class="col-md-6">
+                <img src="{% static 'images/carCompany.jpg' %}" alt="">
+            </div>
+        </div>
+    </section>
+
+    <div class="row p-5 ">
+      <div class="col-md-5 bg-white p-2">
+        <h5>All Brands</h5>
+        <div class="d-flex flex-wrap">
+          {% for br in carbrands %}
+          <div class="form-check" style="margin:15px">
+            <input class="form-check-input" type="radio" name="carbrands" id="{{br.id}}">
+            <label class="form-check-label" for="{{br.id}}">
+            <a href="{% url 'brand_wise_post' br.slug %}" class="text-decoration-none text-dark">{{ br.brand_name}}
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="row m-5" style="margin-left:150px">
+        <!-- Car models section -->
+        <div class="col-md-10 p-3">
+            <h4>Total Cars Found: {{ data|length }}</h4>
+            <div class="row">
+                {% for brand in data %}
+                <div class="col-sm-3 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="card-img-top" src="{{ brand.image.url }}" alt="Card image cap">
+                            <h5 class="card-title">
+                                <a href="{% url 'detail_post' brand.id %}" class="text-decoration-none text-dark">{{ brand.car_name }}</a>
+                            </h5>
+                            <h5 class="card-title">
+                                <a href="{% url 'detail_post' brand.id %}" class="text-decoration-none text-dark">{{ brand.car_price }}</a>
+                            </h5>
+                            <p class="card-text">
+                                {{ brand.car_model.brand_name }} <!-- Display brand name -->
+                            </p>
+                            <a class="btn btn-warning" href="{% url 'detail_post' brand.id %}">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
