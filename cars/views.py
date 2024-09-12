@@ -86,10 +86,12 @@ def edit_profile(request):
         profile_form = forms.ChangeUserForm(request.POST,instance=request.user)
         if profile_form.is_valid():
             profile_form.save()
-            return redirect('profile')
+            return redirect('home')
     else:
+        # print("from")
         profile_form = forms.ChangeUserForm(instance=request.user)
-    return render(request,'profile.html',{'form' : profile_form})
+        # print(profile_form)
+    return render(request,'edit_profile.html',{'form' : profile_form})
 
 def buy_car(request,id,profile_id):
     car = CarModel.objects.get(id=id)

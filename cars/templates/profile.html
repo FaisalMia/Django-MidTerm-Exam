@@ -1,11 +1,9 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-
-<div>
-    <a class="btn btn-primary" href="{% url 'edit_profile' %}">Edit Your Profile</a>
-</div>
- <p> User : {{request.user.id}}</p>
+ {% comment %} <p> User : {{request.user.id}}</p> {% endcomment %}
+<a class="btn btn-primary" href="{% url 'edit_profile' %}">Edit Your Profile</a>
 <section class="container">
     {% for brand in data %}
     <div class="col-sm-3 mb-4">
@@ -14,7 +12,7 @@
           <img class="card-img-top" src="{{brand.image.url}}" alt="Card image cap"> <!-- image addition -->
           <h5 class="card-title"><a href="{% url 'detail_post' brand.id %}" class="text-decoration-none text-dark">Car Name: {{brand.car_name}}</a></h5>
           <h5 class="card-title"><a href="{% url 'detail_post' brand.id %}" class="text-decoration-none text-dark">Car Price: {{brand.car_price}}</a></h5>
-          <h5 class="card-title"><a href="{% url 'detail_post' brand.id %}" class="text-decoration-none text-dark">Car Model : {{carmodel.car_model.brand_name }} </a></h5>
+          <h5 class="card-title"><a href="{% url 'detail_post' brand.id %}" class="text-decoration-none text-dark">Car Model : {{brand.car_model.brand_name }} </a></h5>
           <button class="btn btn-warning disabled">Purchased Successfully</button>
         </div>
       </div>
