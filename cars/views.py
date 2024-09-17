@@ -77,8 +77,11 @@ class CommentsPostView(DetailsPostView):
         
 @login_required
 def profile(request,id):
-    data = CarModel.objects.filter(id = id)
-    return render(request,'profile.html',{'data' : data})
+    # data = CarModel.objects.filter(id = id)
+    # return render(request,'profile.html',{'data' : data})
+    user = User.objects.get(id=id)
+    purchased_cars = user.purchased_cars.all() # Get all cars the user has bought
+    return render(request, 'profile.html', {'purchased_cars': purchased_cars})
 
 @login_required
 def edit_profile(request):
@@ -101,7 +104,9 @@ def buy_car(request,id,profile_id):
     if car.car_quantity > 0:
         car.car_quantity -= 1
         car.save()
-        return redirect('profile',id)
+        user = User.objects.get(id=profile_id) # listing cars for buyers
+        car.buyers.add(user)
+        return redirect('profile', profile_id)
         
     
 
